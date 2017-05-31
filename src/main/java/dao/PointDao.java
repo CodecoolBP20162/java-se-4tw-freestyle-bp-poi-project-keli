@@ -11,7 +11,4 @@ public interface PointDao {
 
     void getNearestPoint(Point inputPoint);
 
-    //List<Point> getRestaurants();
-
-
 }

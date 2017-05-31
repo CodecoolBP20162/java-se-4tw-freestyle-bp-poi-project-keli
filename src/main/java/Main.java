@@ -29,10 +29,8 @@ public class Main {
         post("/get-point/:x/:y", (Request req, Response res) -> {
             double xCoord = Double.parseDouble(req.params(":x"));
             double yCoord = Double.parseDouble(req.params(":y"));
+            Controller.calculateNearestPoint(xCoord, yCoord);
 
-            Point searchedPoint = new Point(xCoord, yCoord);
-            pointDao.addPoint(searchedPoint);
-            System.out.println("a");
             res.type("application/json");
             return "{\"message\":\"Custom 500 handling\"}";
         });

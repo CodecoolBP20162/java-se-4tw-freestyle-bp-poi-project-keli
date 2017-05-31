@@ -15,9 +15,6 @@ import java.util.List;
  * Created by keli on 2017.05.31..
  */
 public class PointDaoImpl extends JdbcDao implements PointDao {
-    // add hozzá a pontot a searched_pointhoz
-    // vedd ki a legmagasabb id-jút a searched_point-ból
-    // számold ki a legközelebbi pontot
 
     @Override
     public void addPoint(Point point) {
@@ -50,28 +47,4 @@ public class PointDaoImpl extends JdbcDao implements PointDao {
 
 
     }
-
-    @Override
-    public List<Point> getRestaurants(){
-        List<Point> restaurants = new ArrayList<>();
-        String query = "SELECT * FROM bp_poi_restaurant_3857_point";
-
-        try {
-            Connection connection = ConnectionGetter.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(query);
-            ResultSet resultSet = stmt.executeQuery();
-
-            while(resultSet.next()){
-                Point point = new Point(resultSet.getString("name"),
-                        resultSet.getString("fclass"),
-                        resultSet.getInt("code"));
-                restaurants.add(point);
-            }
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-
-        return null;
-    }
-
 }

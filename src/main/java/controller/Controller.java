@@ -22,17 +22,12 @@ public class Controller {
 
     public static ModelAndView renderIndex(Request req, Response res) throws SQLException{
         Map<String, List> params = new HashMap();
-        params.put("points", getAllPoints());
         return new ModelAndView(params, "index");
     }
 
 
-    public static List<Point> getAllPoints() {
-        List<Point> pointList = pointDao.getRestaurants();
-        return pointList;
-    }
-
-    public static void calculateNearestPoint(double x, double y){
-
+    public static void calculateNearestPoint(double xCoord, double yCoord){
+        Point searchedPoint = new Point(xCoord, yCoord);
+        pointDao.addPoint(searchedPoint);
     }
 }
