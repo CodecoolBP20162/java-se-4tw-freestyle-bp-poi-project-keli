@@ -13,6 +13,7 @@ import static spark.Spark.*;
 public class Main {
 
     private static PointDao pointDao = new PointDaoImpl();
+    private static Point nearestPoint;
 
     public static void main(String[] args) {
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
@@ -26,10 +27,20 @@ public class Main {
         post("/get-point/:x/:y", (Request req, Response res) -> {
             double xCoord = Double.parseDouble(req.params(":x"));
             double yCoord = Double.parseDouble(req.params(":y"));
-            Controller.calculateNearestPoint(xCoord, yCoord);
+            nearestPoint = Controller.calculateNearestPoint(xCoord, yCoord);
 
             res.type("application/json");
             return "{\"message\":\"Custom 500 handling\"}";
         });
+
+        get("/get-nearest", (Request req, Response res) -> {
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put("name", nearestPoint.getName());
+            jsonObj.put("fclass", nearestPoint.getType());
+            jsonObj.put("x", nearestPoint.getY());
+            jsonObj.put("y", nearestPoint.getX());
+            return jsonObj;
+        });
+
     }
 }

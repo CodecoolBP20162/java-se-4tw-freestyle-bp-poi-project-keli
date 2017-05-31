@@ -76,8 +76,7 @@ $(document).ready(function(){
 
         draw.on("drawend", function(event) {
             var feature = event.feature;
-            coords=feature.getGeometry().getCoordinates();
-
+            coords = feature.getGeometry().getCoordinates();
             sendData(coords[0], coords[1]);
         });
 
@@ -94,6 +93,33 @@ $(document).ready(function(){
         map.addInteraction(draw);
     };
 
+    var updateModalWindow = function(data){
+        $("#modal-body-to-insert").empty();
+        $("#modal-header").text(data["name"]);
+        var $type = $("<p>").text("Type: " + data["fclass"]);
+        var $xCoord = $("<p>").text("X coord: " + data["x"]);
+        var $yCoord = $("<p>").text("Y coord: " + data["y"]);
+        $("#modal-body-to-insert").append($type).append($xCoord).append($yCoord);
+        // $("#modal-body-to-insert").append($yCoord);
+        alert("update");
+    };
+
+    var getData = function(){
+        $.ajax({
+            url: "/get-nearest",
+            method: "GET",
+            dataType: "json",
+            success: function(data){
+                alert(data["name"]);
+                updateModalWindow(data);
+            },
+            error: function(){
+                alert("baj van");
+            }
+
+        })
+    };
+
     var sendData = function(x,y) {
         $.ajax({
             url:"/get-point/" + x + "/" + y,
@@ -108,11 +134,11 @@ $(document).ready(function(){
                 // y: y
                 // type: document.getElementById("type").value},
             success: function (data) {
-                if (data) {
-                    console.log("elment")
-                    // cleanUp();
-                }
-                else alert("no-no");
+                console.log("elment");
+                getData();
+            },
+            error: function(){
+                alert("no-no");
             }
         });
     };
