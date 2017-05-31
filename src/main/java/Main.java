@@ -1,4 +1,7 @@
 import controller.Controller;
+import dao.PointDao;
+import dao.PointDaoImpl;
+import model.Point;
 import org.json.simple.JSONObject;
 import spark.Request;
 import spark.Response;
@@ -12,6 +15,8 @@ import static spark.Spark.*;
  */
 public class Main {
 
+    private static PointDao pointDao = new PointDaoImpl();
+
     public static void main(String[] args) {
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFileLocation("/public");
@@ -21,11 +26,13 @@ public class Main {
             return new ThymeleafTemplateEngine().render(Controller.renderIndex(req, res));
         });
 
-        post("/get-point/:x/:y/:name", (Request req, Response res) -> {
+        post("/get-point/:x/:y", (Request req, Response res) -> {
             double xCoord = Double.parseDouble(req.params(":x"));
             double yCoord = Double.parseDouble(req.params(":y"));
-            String name = req.params(":name");
-            System.out.println(yCoord);
+
+            Point searchedPoint = new Point(xCoord, yCoord);
+            pointDao.addPoint(searchedPoint);
+            System.out.println("a");
             res.type("application/json");
             return "{\"message\":\"Custom 500 handling\"}";
         });
