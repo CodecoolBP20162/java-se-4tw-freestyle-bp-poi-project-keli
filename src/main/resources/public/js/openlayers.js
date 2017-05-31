@@ -4,20 +4,31 @@
 
 
 $(document).ready(function(){
-    var map, draw, source, poiWms;
+    var map, draw, source, poiWms, polygonWMS;
+
     function init() {
 
+        // create objects
         source = new ol.source.Vector({wrapX: false});
+        poiWms= new ol.layer.Tile({
+            title: 'Points',
+            source: new ol.source.TileWMS({
+                url: 'http://localhost:8080/geoserver/wms',
+                params: {'LAYERS': 'bp:bp_poi_restaurant_3857', 'TILED': true}
+            })
 
-        // poiWms= new ol.layer.Tile({
-        //     title: 'WMS',
-        //     source: new ol.source.TileWMS({
-        //         url: 'http://192.168.1.129:8080/geoserver/poi/wms',
-        //         params: {'LAYERS': 'poi:poi_3857', 'TILED': true}
-        //     })
-        //
-        // });
+        });
 
+        polygonWMS = new ol.layer.Tile({
+            title: 'Points',
+            source: new ol.source.TileWMS({
+                url: 'http://localhost:8080/geoserver/wms',
+                params: {'LAYERS': 'bp:bp_hatar_3857', 'TILED': true}
+            })
+
+        });
+
+        // extent map object with poi and polygon layers
         map = new ol.Map({
             target: 'map',
             layers: [
@@ -48,7 +59,9 @@ $(document).ready(function(){
                 //             source: source
                 //         })
                 //     ]
-                // })
+                // }),
+                poiWms,
+                polygonWMS
             ],
             view: new ol.View({
                 center: ol.proj.fromLonLat([19.109278, 47.496398]),
@@ -62,23 +75,65 @@ $(document).ready(function(){
         });
 
         draw.on("drawend", function(event) {
-
             var feature = event.feature;
             coords=feature.getGeometry().getCoordinates();
 
             sendData(coords[0], coords[1]);
-
         });
 
         draw.on("drawstart", function(event) {
-
             source.clear();
-
         });
 
-        var layerSwitcher = new ol.control.LayerSwitcher({});
-
-        map.addControl(layerSwitcher);
+        // layerSwitcher
+        // var layerSwitcher = new ol.control.LayerSwitcher({});
+        // map.addControl(layerSwitcher);
     }
+
+    var drawPoint = function() {
+        map.addInteraction(draw);
+    };
+
+    var sendData = function(x,y) {
+        $.ajax({
+            url:"/get-point/" + x + "/" + y + "/" + "nev",
+            method: "POST",
+            dataType: "json",
+            // data:
+            //     {
+            //         "id": "data",
+            //     },
+            //  {
+            //     x: "sad",
+                // y: y
+                // type: document.getElementById("type").value},
+            success: function (data) {
+                if (data) {
+                    console.log("elment")
+                    // cleanUp();
+                }
+                else alert("no-no");
+            }
+        });
+    };
+
+    var cleanUp = function() {
+        // document.getElementById("userName").value="";
+        // document.getElementById("date").value="";
+        // document.getElementById("note").value="";
+        source.clear();
+
+        map.removeInteraction(draw);
+        params=poiWms.getSource().getParams();
+        params.t= new Date().getMilliseconds();
+        poiWms.getSource().updateParams(params);
+    };
+
     init();
+
+    $("#addPoint").click(function(){
+        drawPoint();
+    })
+
+
 });
