@@ -7,7 +7,7 @@ public class Point {
 
     private String name;
     private String type;
-    private int osmCode;
+    private String osmCode;
     private double x;
     private double y;
 
@@ -16,11 +16,20 @@ public class Point {
         this.y = y;
     }
 
-    public Point(String name, String type, int osmCode) {
+    public Point(String name, String type, String osmCode) {
         this.name = name;
         this.type = type;
         this.osmCode = osmCode;
     }
+
+    public Point(String name, String type, String osmCode, double x, double y) {
+        this.name = name;
+        this.type = type;
+        this.osmCode = osmCode;
+        this.x = x;
+        this.y = y;
+    }
+
 
     public String getName() {
         return name;
@@ -30,7 +39,7 @@ public class Point {
         return type;
     }
 
-    public int getOsmCode() {
+    public String getOsmCode() {
         return osmCode;
     }
 

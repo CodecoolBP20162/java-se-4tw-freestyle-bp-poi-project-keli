@@ -29,5 +29,7 @@ public class Controller {
     public static void calculateNearestPoint(double xCoord, double yCoord){
         Point searchedPoint = new Point(xCoord, yCoord);
         pointDao.addPoint(searchedPoint);
+        Point foundedPoint = pointDao.getNearestPoint();
+        System.out.println(foundedPoint.getName());
     }
 }

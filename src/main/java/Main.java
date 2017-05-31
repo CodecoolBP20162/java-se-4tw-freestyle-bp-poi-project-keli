@@ -10,9 +10,6 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import static spark.Spark.*;
 
 
-/**
- * Created by keli on 2017.05.29..
- */
 public class Main {
 
     private static PointDao pointDao = new PointDaoImpl();
