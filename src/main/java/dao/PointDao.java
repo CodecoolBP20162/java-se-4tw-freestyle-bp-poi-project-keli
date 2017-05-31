@@ -2,6 +2,8 @@ package dao;
 
 import model.Point;
 
+import java.util.List;
+
 
 public interface PointDao {
 
@@ -9,6 +11,7 @@ public interface PointDao {
 
     void getNearestPoint(Point inputPoint);
 
+    //List<Point> getRestaurants();
 
 
 }

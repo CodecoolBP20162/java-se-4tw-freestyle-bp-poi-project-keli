@@ -96,7 +96,7 @@ $(document).ready(function(){
 
     var sendData = function(x,y) {
         $.ajax({
-            url:"/get-point/" + x + "/" + y + "/" + "nev",
+            url:"/get-point/" + x + "/" + y,
             method: "POST",
             dataType: "json",
             // data:
