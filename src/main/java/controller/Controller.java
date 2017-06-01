@@ -19,7 +19,7 @@ public class Controller {
         return new ModelAndView(params, "index");
     }
 
-    public Point calculateNearestPoint(double xCoord, double yCoord){
+    public Point calculateNearestPoint(double xCoord, double yCoord) throws SQLException {
         Point searchedPoint = new Point(xCoord, yCoord);
         searchedPoints.push(searchedPoint);     // last-in-first-out, store all searched points
         pointDao.addPoint(searchedPoint);

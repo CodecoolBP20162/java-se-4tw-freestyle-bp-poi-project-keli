@@ -9,27 +9,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by keli on 2017.05.31..
- */
 
 public class PointDaoImpl extends JdbcDao implements PointDao {
 
     @Override
-    public void addPoint(Point point) {
+    public void addPoint(Point point) throws SQLException {
         String query = "INSERT INTO public.searched_point (geom_3857) VALUES(" +
                 "ST_SetSRID(ST_MakePoint (?, ?), 3857))";
 
-        try {
             Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setDouble(1, point.getX());
             stmt.setDouble(2, point.getY());
             stmt.executeQuery();
             conn.close();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
     }
 
     @Override
