@@ -1,9 +1,7 @@
 package dao;
 
-import jdbc.ConnectionGetter;
 import jdbc.JdbcDao;
 import model.Point;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,8 +21,7 @@ public class PointDaoImpl extends JdbcDao implements PointDao {
      * Overrided method, from the PointDao interface.
      * Add the input argument ({@link Point}) as a new row to the searched_point table.
      *
-     * @params point {@link Point} the added point instance
-     * @throws {@link SQLException}, because the test...
+     * @param point {@link Point} the added point instance
      */
     @Override
     public void addPoint(Point point) {

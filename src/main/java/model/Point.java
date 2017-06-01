@@ -21,8 +21,8 @@ public class Point {
     /**
      * Class constructor, which use the x and y coordinate to create instances.
      *
-     * @params x coordinate
-     * @params x coordinate
+     * @param x coordinate
+     * @param y coordinate
      */
     public Point(double x, double y){
         this.x = x;
@@ -32,9 +32,9 @@ public class Point {
     /**
      * Class constructor, which use name, type and osmcode to create instances.
      *
-     * @params name {@link String} the point's name
-     * @params type {@link String} the point's type
-     * @params osmCode {@link String} the point's osm code
+     * @param name {@link String} the point's name
+     * @param type {@link String} the point's type
+     * @param osmCode {@link String} the point's osm code
      */
     public Point(String name, String type, String osmCode) {
         this.name = name;
@@ -45,11 +45,11 @@ public class Point {
     /**
      * Class constructor, which use name, type, osmcode and x-y coordinates to create instances.
      *
-     * @params name {@link String} the point's name
-     * @params type {@link String} the point's type
-     * @params osmCode {@link String} the point's osm code
-     * @params x coordinate
-     * @params x coordinate
+     * @param name {@link String} the point's name
+     * @param type {@link String} the point's type
+     * @param osmCode {@link String} the point's osm code
+     * @param x coordinate
+     * @param y coordinate
      */
     public Point(String name, String type, String osmCode, double x, double y) {
         this.name = name;
