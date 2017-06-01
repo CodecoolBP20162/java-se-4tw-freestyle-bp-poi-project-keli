@@ -28,7 +28,7 @@ public class Main {
             double xCoord = Double.parseDouble(req.params(":x"));
             double yCoord = Double.parseDouble(req.params(":y"));
             nearestPoint = Controller.calculateNearestPoint(xCoord, yCoord);
-
+            System.out.println(xCoord + " --> " +  yCoord);
             res.type("application/json");
             return "{\"message\":\"Custom 500 handling\"}";
         });

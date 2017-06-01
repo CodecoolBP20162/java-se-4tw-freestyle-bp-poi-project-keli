@@ -17,11 +17,6 @@ public class PointDaoImpl extends JdbcDao implements PointDao {
 
     @Override
     public void addPoint(Point point) {
-//        String query = "INSERT INTO public.searched_point (geom_3857) VALUES(" +
-//                "ST_SetSRID(ST_MakePoint (" + point.getX() + ", " + point.getY() + "), 3857))";
-//            executeQuery(query);
-//            System.out.println(query);
-
         String query = "INSERT INTO public.searched_point (geom_3857) VALUES(" +
                 "ST_SetSRID(ST_MakePoint (?, ?), 3857))";
 

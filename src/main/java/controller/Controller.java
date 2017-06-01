@@ -2,17 +2,11 @@ package controller;
 
 import dao.PointDao;
 import dao.PointDaoImpl;
-import jdbc.ConnectionGetter;
 import model.Point;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
