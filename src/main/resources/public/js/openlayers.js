@@ -10,7 +10,7 @@ $(document).ready(function(){
         // create objects
         source = new ol.source.Vector({wrapX: false});
 
-        poiWms = new ol.layer.Tile({
+        poiWms = new ol.layer.Tile({        // restaurant poi layer
             title: 'Restaurant',
             source: new ol.source.TileWMS({
                 url: 'http://localhost:8080/geoserver/wms',
@@ -18,7 +18,7 @@ $(document).ready(function(){
             })
         });
 
-        polygonWMS = new ol.layer.Tile({
+        polygonWMS = new ol.layer.Tile({    // Budapest border layer
             title: 'Budapest border',
             source: new ol.source.TileWMS({
                 url: 'http://localhost:8080/geoserver/wms',
@@ -26,14 +26,13 @@ $(document).ready(function(){
             })
         });
 
-        baseMap = new ol.layer.Tile({
+        baseMap = new ol.layer.Tile({       // Base map layer (OSM)
             title: 'OpenStreetMap',
             type: 'base',
             source: new ol.source.OSM()
         });
 
-        // extent map object with poi and polygon layers
-        map = new ol.Map({
+        map = new ol.Map({                  // Add above object to map object
             target: 'map',
             layers: [
                 new ol.layer.Group({
@@ -50,12 +49,13 @@ $(document).ready(function(){
                     ]
                 })
             ],
-            view: new ol.View({
+            view: new ol.View({             // Add view to map
                 center: ol.proj.fromLonLat([19.110288, 47.496398]),
                 zoom: 11
             })
         });
 
+        // Draw interaction
         draw = new ol.interaction.Draw({
             source: source,
             type: "Point"
@@ -63,7 +63,7 @@ $(document).ready(function(){
 
         draw.on("drawend", function(event) {
             var feature = event.feature;
-            coords = feature.getGeometry().getCoordinates();
+            var coords = feature.getGeometry().getCoordinates();
             sendData(coords[0], coords[1]);
         });
 
@@ -71,7 +71,7 @@ $(document).ready(function(){
             source.clear();
         });
 
-        // layerSwitcher
+        // create layerSwitcher and add as control
         var layerSwitcher = new ol.control.LayerSwitcher({});
         map.addControl(layerSwitcher);
     }
@@ -81,15 +81,17 @@ $(document).ready(function(){
     };
 
     var updateModalWindow = function(data){
-        $("#modal-body-to-insert").empty();
+        var $modalBody = $("#modal-body-to-insert");
+        $modalBody.empty();
         $("#modal-header").text(data["name"]);
         var $type = $("<p>").text("Type: " + data["fclass"]);
         var $distance = $("<p>").text("Distance: " + data["distance"] + " meter");
         var $xCoord = $("<p>").text("X coord: " + data["x"]);
         var $yCoord = $("<p>").text("Y coord: " + data["y"]);
-        $("#modal-body-to-insert").append($distance).append($type).append($xCoord).append($yCoord);
+        $modalBody.append($distance).append($type).append($xCoord).append($yCoord);
     };
 
+    // ajax
     var getData = function(){
         $.ajax({
             url: "/get-nearest",
@@ -110,14 +112,6 @@ $(document).ready(function(){
             url:"/get-point/" + x + "/" + y,
             method: "POST",
             dataType: "json",
-            // data:
-            //     {
-            //         "id": "data",
-            //     },
-            //  {
-            //     x: "sad",
-            // y: y
-            // type: document.getElementById("type").value},
             success: function (data) {
                 console.log("elment");
                 getData();
@@ -127,18 +121,6 @@ $(document).ready(function(){
             }
         });
     };
-
-    // var cleanUp = function() {
-    //     // document.getElementById("userName").value="";
-    //     // document.getElementById("date").value="";
-    //     // document.getElementById("note").value="";
-    //     source.clear();
-    //
-    //     map.removeInteraction(draw);
-    //     params=poiWms.getSource().getParams();
-    //     params.t= new Date().getMilliseconds();
-    //     poiWms.getSource().updateParams(params);
-    // };
 
     init();
 

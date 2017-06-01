@@ -42,6 +42,5 @@ public class Main {
             jsonObj.put("y", nearestPoint.getX());
             return jsonObj;
         });
-
     }
 }
