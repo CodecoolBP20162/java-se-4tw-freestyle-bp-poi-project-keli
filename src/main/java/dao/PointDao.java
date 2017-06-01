@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PointDao {
 
-    void addPoint(Point point) throws SQLException;
+    void addPoint(Point point) ;
 
     Point getNearestPoint();
 

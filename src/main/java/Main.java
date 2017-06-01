@@ -7,6 +7,8 @@ import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
+import java.sql.SQLException;
+
 import static spark.Spark.*;
 
 
@@ -28,6 +30,7 @@ public class Main {
         post("/get-point/:x/:y", (Request req, Response res) -> {
             double xCoord = Double.parseDouble(req.params(":x"));
             double yCoord = Double.parseDouble(req.params(":y"));
+            System.out.println(xCoord);
             nearestPoint = controller.calculateNearestPoint(xCoord, yCoord);
             System.out.println(xCoord + " --> " +  yCoord);
             res.type("application/json");

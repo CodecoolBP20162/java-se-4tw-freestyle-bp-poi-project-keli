@@ -114,7 +114,7 @@ $(document).ready(function(){
         })
     };
 
-    var sendData = function(x,y) {
+    var sendData = function(x, y) {
         $.ajax({
             url:"/get-point/" + x + "/" + y,
             method: "POST",

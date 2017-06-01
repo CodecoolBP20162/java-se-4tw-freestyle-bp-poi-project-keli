@@ -22,12 +22,6 @@ class PointDaoImplTest {
     }
 
     @Test
-    public void testAddPointMethodThrowException() throws SQLException {
-        PointDao pointDaoMock = mock(PointDaoImpl.class);
-        doThrow(new SQLException()).when(pointDaoMock).addPoint(new Point(0, 0));
-    }
-
-    @Test
     public void testAddPointMethodNotThrowException() throws SQLException {
         PointDao pointDaoMock = mock(PointDaoImpl.class);
         doNothing().when(pointDaoMock).addPoint(new Point(55, 55));
