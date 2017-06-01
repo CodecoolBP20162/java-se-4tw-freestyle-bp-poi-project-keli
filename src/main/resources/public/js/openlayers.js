@@ -84,7 +84,7 @@ $(document).ready(function(){
         $("#modal-body-to-insert").empty();
         $("#modal-header").text(data["name"]);
         var $type = $("<p>").text("Type: " + data["fclass"]);
-        var $distance = $("<p>").text("Distance: " + data["distance"]);
+        var $distance = $("<p>").text("Distance: " + data["distance"] + " meter");
         var $xCoord = $("<p>").text("X coord: " + data["x"]);
         var $yCoord = $("<p>").text("Y coord: " + data["y"]);
         $("#modal-body-to-insert").append($distance).append($type).append($xCoord).append($yCoord);
