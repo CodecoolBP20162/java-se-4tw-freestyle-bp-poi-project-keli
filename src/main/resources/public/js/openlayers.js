@@ -4,7 +4,7 @@
 
 
 $(document).ready(function(){
-    var map, draw, source, poiWms, polygonWMS, baseMap;
+    var map, draw, source, poiWms, polygonWMS, baseMap, vectorSource;
 
     function init() {
         // create objects
@@ -47,13 +47,16 @@ $(document).ready(function(){
                         poiWms,
                         polygonWMS
                     ]
-                })
+                }),
             ],
             view: new ol.View({             // Add view to map
                 center: ol.proj.fromLonLat([19.110288, 47.496398]),
                 zoom: 11
             })
         });
+
+        console.log(map.getView().setCenter(ol.proj.fromLonLat([20.110288, 47.496398])));
+//        map.view.setCenter(ol.proj.fromLonLat([20.110288, 47.496398]));
 
         // Draw interaction
         draw = new ol.interaction.Draw({
