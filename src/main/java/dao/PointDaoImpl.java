@@ -8,12 +8,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by keli on 2017.05.31..
  */
+
 public class PointDaoImpl extends JdbcDao implements PointDao {
 
     @Override
@@ -65,4 +64,26 @@ public class PointDaoImpl extends JdbcDao implements PointDao {
         }
         return null;
     }
+
+    @Override
+    public double getNearestDistance(){
+        String query = "SELECT MIN(ST_Distance((SELECT ST_Transform(geom_3857, 23700) FROM searched_point " +
+                "WHERE id = (SELECT MAX(id) from searched_point)), ST_Transform(geom, 23700))) " +
+                "FROM bp_poi_restaurant_3857_point;";
+
+        try {
+            Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()){
+                double minDistance = resultSet.getDouble("min");
+                conn.close();
+                return minDistance;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

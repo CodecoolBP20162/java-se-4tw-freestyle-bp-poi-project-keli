@@ -25,12 +25,12 @@ public class Controller {
         return new ModelAndView(params, "index");
     }
 
-
     public static Point calculateNearestPoint(double xCoord, double yCoord){
         Point searchedPoint = new Point(xCoord, yCoord);
         pointDao.addPoint(searchedPoint);
         Point foundedPoint = pointDao.getNearestPoint();
-        System.out.println(foundedPoint.getName());
+        double minDistance = pointDao.getNearestDistance();
+        System.out.println("Distance: " + minDistance + " rest: " + foundedPoint.getName());
         return foundedPoint;
     }
 }

@@ -11,4 +11,6 @@ public interface PointDao {
 
     Point getNearestPoint();
 
+    double getNearestDistance();
+
 }

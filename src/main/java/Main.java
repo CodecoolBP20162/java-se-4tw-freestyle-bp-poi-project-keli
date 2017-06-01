@@ -36,6 +36,7 @@ public class Main {
         get("/get-nearest", (Request req, Response res) -> {
             JSONObject jsonObj = new JSONObject();
             jsonObj.put("name", nearestPoint.getName());
+            jsonObj.put("distance", (int) pointDao.getNearestDistance());
             jsonObj.put("fclass", nearestPoint.getType());
             jsonObj.put("x", nearestPoint.getY());
             jsonObj.put("y", nearestPoint.getX());

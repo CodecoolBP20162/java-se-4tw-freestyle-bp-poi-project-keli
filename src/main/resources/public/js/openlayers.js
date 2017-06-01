@@ -97,10 +97,10 @@ $(document).ready(function(){
         $("#modal-body-to-insert").empty();
         $("#modal-header").text(data["name"]);
         var $type = $("<p>").text("Type: " + data["fclass"]);
+        var $distance = $("<p>").text("Distance: " + data["distance"]);
         var $xCoord = $("<p>").text("X coord: " + data["x"]);
         var $yCoord = $("<p>").text("Y coord: " + data["y"]);
-        $("#modal-body-to-insert").append($type).append($xCoord).append($yCoord);
-        // $("#modal-body-to-insert").append($yCoord);
+        $("#modal-body-to-insert").append($distance).append($type).append($xCoord).append($yCoord);
         alert("update");
     };
 
