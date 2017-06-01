@@ -4,28 +4,32 @@
 
 
 $(document).ready(function(){
-    var map, draw, source, poiWms, polygonWMS;
+    var map, draw, source, poiWms, polygonWMS, baseMap;
 
     function init() {
-
         // create objects
         source = new ol.source.Vector({wrapX: false});
-        poiWms= new ol.layer.Tile({
-            title: 'Points',
+
+        poiWms = new ol.layer.Tile({
+            title: 'Restaurant',
             source: new ol.source.TileWMS({
                 url: 'http://localhost:8080/geoserver/wms',
                 params: {'LAYERS': 'bp:bp_poi_restaurant_3857', 'TILED': true}
             })
-
         });
 
         polygonWMS = new ol.layer.Tile({
-            title: 'Points',
+            title: 'Budapest border',
             source: new ol.source.TileWMS({
                 url: 'http://localhost:8080/geoserver/wms',
                 params: {'LAYERS': 'bp:bp_hatar_3857', 'TILED': true}
             })
+        });
 
+        baseMap = new ol.layer.Tile({
+            title: 'OpenStreetMap',
+            type: 'base',
+            source: new ol.source.OSM()
         });
 
         // extent map object with poi and polygon layers
@@ -35,37 +39,20 @@ $(document).ready(function(){
                 new ol.layer.Group({
                     'title': "Base maps",
                     layers: [
-                        new ol.layer.Tile({
-                            title: 'OpenStreetMap',
-                            type: 'base',
-                            source: new ol.source.OSM()
-                        })
+                        baseMap
                     ]
                 }),
-                // new ol.layer.Group({
-                //     title: "Overlays",
-                //     layers: [
-                //         new ol.layer.Tile({
-                //             title: 'WMS',
-                //             source: new ol.source.TileWMS({
-                //                 url: 'http://gis.teir.hu/arcgis/services/rendezes/bp_agglo/MapServer/WMSServer',
-                //                 params: {'LAYERS': '1', 'TILED': true}
-                //             })
-                //         }),
-                //         poiWms,
-                //
-                //         new ol.layer.Vector({
-                //             title: 'Point',
-                //             source: source
-                //         })
-                //     ]
-                // }),
-                poiWms,
-                polygonWMS
+                new ol.layer.Group({
+                    'title' : 'Layers',
+                    layers : [
+                        poiWms,
+                        polygonWMS
+                    ]
+                })
             ],
             view: new ol.View({
-                center: ol.proj.fromLonLat([19.109278, 47.496398]),
-                zoom: 10
+                center: ol.proj.fromLonLat([19.110288, 47.496398]),
+                zoom: 11
             })
         });
 
@@ -85,8 +72,8 @@ $(document).ready(function(){
         });
 
         // layerSwitcher
-        // var layerSwitcher = new ol.control.LayerSwitcher({});
-        // map.addControl(layerSwitcher);
+        var layerSwitcher = new ol.control.LayerSwitcher({});
+        map.addControl(layerSwitcher);
     }
 
     var drawPoint = function() {
@@ -101,7 +88,6 @@ $(document).ready(function(){
         var $xCoord = $("<p>").text("X coord: " + data["x"]);
         var $yCoord = $("<p>").text("Y coord: " + data["y"]);
         $("#modal-body-to-insert").append($distance).append($type).append($xCoord).append($yCoord);
-        alert("update");
     };
 
     var getData = function(){
@@ -110,7 +96,6 @@ $(document).ready(function(){
             method: "GET",
             dataType: "json",
             success: function(data){
-                alert(data["name"]);
                 updateModalWindow(data);
             },
             error: function(){
@@ -131,8 +116,8 @@ $(document).ready(function(){
             //     },
             //  {
             //     x: "sad",
-                // y: y
-                // type: document.getElementById("type").value},
+            // y: y
+            // type: document.getElementById("type").value},
             success: function (data) {
                 console.log("elment");
                 getData();
@@ -143,23 +128,21 @@ $(document).ready(function(){
         });
     };
 
-    var cleanUp = function() {
-        // document.getElementById("userName").value="";
-        // document.getElementById("date").value="";
-        // document.getElementById("note").value="";
-        source.clear();
-
-        map.removeInteraction(draw);
-        params=poiWms.getSource().getParams();
-        params.t= new Date().getMilliseconds();
-        poiWms.getSource().updateParams(params);
-    };
+    // var cleanUp = function() {
+    //     // document.getElementById("userName").value="";
+    //     // document.getElementById("date").value="";
+    //     // document.getElementById("note").value="";
+    //     source.clear();
+    //
+    //     map.removeInteraction(draw);
+    //     params=poiWms.getSource().getParams();
+    //     params.t= new Date().getMilliseconds();
+    //     poiWms.getSource().updateParams(params);
+    // };
 
     init();
 
     $("#addPoint").click(function(){
         drawPoint();
     })
-
-
 });
