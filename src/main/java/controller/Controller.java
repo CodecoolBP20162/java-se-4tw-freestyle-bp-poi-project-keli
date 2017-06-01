@@ -10,16 +10,16 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class Controller {
-    private static PointDao pointDao = new PointDaoImpl();
-    private static Deque<Point> searchedPoints = new LinkedList<>();
-    private static Stack<Point> foundedPoints = new Stack();
+    private PointDao pointDao = new PointDaoImpl();
+    private Deque<Point> searchedPoints = new LinkedList<>();
+    private Stack<Point> foundedPoints = new Stack();
 
-    public static ModelAndView renderIndex(Request req, Response res) throws SQLException{
+    public ModelAndView renderIndex(Request req, Response res) throws SQLException{
         Map<String, List> params = new HashMap();
         return new ModelAndView(params, "index");
     }
 
-    public static Point calculateNearestPoint(double xCoord, double yCoord){
+    public Point calculateNearestPoint(double xCoord, double yCoord){
         Point searchedPoint = new Point(xCoord, yCoord);
         searchedPoints.push(searchedPoint);     // last-in-first-out, store all searched points
         pointDao.addPoint(searchedPoint);
