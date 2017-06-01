@@ -19,7 +19,6 @@ import java.sql.SQLException;
  */
 public class PointDaoImpl extends JdbcDao implements PointDao {
 
-
     /**
      * Overrided method, from the PointDao interface.
      * Add the input argument ({@link Point}) as a new row to the searched_point table.

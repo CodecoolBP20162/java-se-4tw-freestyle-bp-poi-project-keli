@@ -1,6 +1,7 @@
 import controller.Controller;
 import dao.PointDao;
 import dao.PointDaoImpl;
+import jdbc.JdbcDao;
 import model.Point;
 import org.json.simple.JSONObject;
 import spark.Request;
@@ -19,6 +20,7 @@ public class Main {
     private static Controller controller = new Controller();
 
     public static void main(String[] args) {
+        JdbcDao.setupUserAndPasswordFromFile("connection.properties");
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFileLocation("/public");
         port(9999);
