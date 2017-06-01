@@ -78,7 +78,7 @@ $(document).ready(function(){
 
     var setMapView = function (xCoord, yCoord){
         map.getView().setCenter([xCoord, yCoord]);
-        map.getView().setZoom(16);
+        map.getView().setZoom(18);
     };
 
     var drawPoint = function() {
