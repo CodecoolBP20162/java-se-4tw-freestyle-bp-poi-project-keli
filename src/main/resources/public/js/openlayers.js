@@ -85,9 +85,9 @@ $(document).ready(function(){
         map.addControl(layerSwitcher);
     };
 
-    var setMapView = function (xCoord, yCoord){
+    var setMapView = function (xCoord, yCoord, zoomLevel){
         map.getView().setCenter([xCoord, yCoord]);
-        map.getView().setZoom(18);
+        map.getView().setZoom(zoomLevel);
     };
 
     var drawPoint = function() {
@@ -113,7 +113,7 @@ $(document).ready(function(){
             dataType: "json",
             success: function(data){
                 updateModalWindow(data);
-                setMapView(data["y"], data["x"]);
+                setMapView(data["y"], data["x"], 18);
                 // map.getView().setCenter(parseInt(data["x"], parseInt(data["y"])))
             },
             error: function(){
@@ -143,5 +143,9 @@ $(document).ready(function(){
     $("#addPoint").click(function(){
         drawPoint();
     });
+
+    $("#setDefaultView").click(function(){
+        setMapView(2121361, 6023872, 11);
+    })
 
 });
