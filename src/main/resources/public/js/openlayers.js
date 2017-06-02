@@ -4,7 +4,7 @@
 
 
 $(document).ready(function(){
-    var map, draw, source, poiWms, polygonWMS, baseMap, vectorSource;
+    var map, draw, source, poiWms, polygonWMS, baseMap, searchedPoiWms;
 
     var initMap = function () {
         // create objects
@@ -15,6 +15,14 @@ $(document).ready(function(){
             source: new ol.source.TileWMS({
                 url: 'http://localhost:8080/geoserver/wms',
                 params: {'LAYERS': 'bp:bp_poi_restaurant_3857', 'TILED': true}
+            })
+        });
+
+        searchedPoiWms = new ol.layer.Tile({        // restaurant poi layer
+            title: 'Searched points',
+            source: new ol.source.TileWMS({
+                url: 'http://localhost:8080/geoserver/wms',
+                params: {'LAYERS': 'bp:searched_point', 'TILED': true}
             })
         });
 
@@ -45,7 +53,8 @@ $(document).ready(function(){
                     'title' : 'Layers',
                     layers : [
                         poiWms,
-                        polygonWMS
+                        polygonWMS,
+                        searchedPoiWms
                     ]
                 })
             ],
@@ -76,9 +85,9 @@ $(document).ready(function(){
         map.addControl(layerSwitcher);
     };
 
-    var setMapView = function (xCoord, yCoord){
+    var setMapView = function (xCoord, yCoord, zoomLevel){
         map.getView().setCenter([xCoord, yCoord]);
-        map.getView().setZoom(18);
+        map.getView().setZoom(zoomLevel);
     };
 
     var drawPoint = function() {
@@ -104,7 +113,7 @@ $(document).ready(function(){
             dataType: "json",
             success: function(data){
                 updateModalWindow(data);
-                setMapView(data["y"], data["x"]);
+                setMapView(data["y"], data["x"], 18);
                 // map.getView().setCenter(parseInt(data["x"], parseInt(data["y"])))
             },
             error: function(){
@@ -133,5 +142,10 @@ $(document).ready(function(){
 
     $("#addPoint").click(function(){
         drawPoint();
+    });
+
+    $("#setDefaultView").click(function(){
+        setMapView(2121361, 6023872, 11);
     })
+
 });

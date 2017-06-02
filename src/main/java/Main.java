@@ -25,6 +25,8 @@ public class Main {
         staticFileLocation("/public");
         port(9999);
 
+        redirect.get("/", "/home");
+
         get("/home", (Request req, Response res) -> {
             return new ThymeleafTemplateEngine().render(controller.renderIndex(req, res));
         });
